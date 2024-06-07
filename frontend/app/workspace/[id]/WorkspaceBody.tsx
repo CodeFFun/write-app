@@ -14,8 +14,10 @@ export default function WorkspaceBody() {
     useEffect(() => {
       const localAcess = typeof window !== undefined && window.localStorage ? localStorage.getItem('user') : null
       const id = params.id
-      const connect = io("http://localhost:8000", {
-        // path:id as string
+      const connect = io("http://localhost:8000", {        
+        extraHeaders:{
+          path:id as string
+        }
       }) 
       setSocket(connect)
       return() => {
