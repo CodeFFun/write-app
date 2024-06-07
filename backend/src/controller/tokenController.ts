@@ -25,7 +25,7 @@ class tokenController {
   }
 
   async verify(req: Request, res: Response) {
-    let id = req.body.userId
+    let id = JSON.parse(req.body.userId)
     const tokenItem = await Token.findOne().where({ userId: id })
     try {
       if (tokenItem) {
@@ -54,6 +54,7 @@ class tokenController {
         )
       }
     } catch (err) {
+      console.log(err);
       res.json(dataResponse(err, 400, 'Token validation error'))
     }
   }

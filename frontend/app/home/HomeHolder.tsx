@@ -9,7 +9,8 @@ export default function HomeHolder() {
   useEffect(() => {
     const localAcess = typeof window !== undefined && window.localStorage
     if(localAcess){
-      const localeItem:string | null = window.localStorage.getItem('user')
+      const localeItem:any = window.localStorage.getItem('user')
+      console.log(localeItem)
       setLocale(() => localeItem as string)
     }
   }, [])

@@ -40,8 +40,8 @@ export default function HomeMain({ userId }:{ userId: string }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {
-            files && files.map((file, index) => ( 
+          { 
+            files !== null && files.map((file, index) => ( 
                 <TableRow key={index} id={`${file._id}`} className="grid grid-flow-col grid-cols-11 p-3  hover:cursor-pointer" onClick={(e) => onClick(e)}>
                   <TableCell className="col-span-4">{file.name}</TableCell>
                   <TableCell className="col-span-2">{file.createdAt}</TableCell>
