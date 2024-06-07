@@ -4,7 +4,6 @@ import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import Btn from '../Button'
 import Axios from '@/components/lib/axios/Axios'
-import { json } from 'stream/consumers'
 
 
 export default function Form({  formPage }: {formPage:string}) {
@@ -27,7 +26,7 @@ export default function Form({  formPage }: {formPage:string}) {
     e.preventDefault()
     const response = await axios.post(`auth/${formPage.toLowerCase()}`, formData)
     if(typeof window !== undefined && window.localStorage){
-      localStorage.setItem('user', response.data.data.userId)
+      localStorage.setItem('user', response.data.data.id)
     }
     formPage === 'Login' ? router.push('/home') : router.push('/verify-account')  
   }

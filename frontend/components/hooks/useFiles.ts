@@ -9,11 +9,14 @@ export default async function  useFiles(userId: string) {
   const query = useQuery({queryKey:['getFiles', userId, present],
   queryFn: async () => {
     const res = await axios.post('file/getfiles', {userId:userId})
+    console.log(res.data)
     return await res.data.data
   },
   enabled: !!userId
 })
    if(query.data !== undefined){
      return  query.data
+   } else {
+    return []
    }
 }

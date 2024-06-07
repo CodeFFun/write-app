@@ -35,8 +35,14 @@ class fileHandler{
         let userId = req.body.userId
         try {
             let files = await File.find({userId: userId})
-            res.json(dataResponse(files, 200, 'Files Fetched'))
+            if(files.length == 0) {
+                res.json(dataResponse(null, 200, 'No Files Found'))
+                
+            } else {
+                res.json(dataResponse(files, 200, 'Files Fetched'))
+            }
         } catch (error) {
+            console.log(error)
             res.json(dataResponse(error, 500, 'Something went wrong'))
         }
     }
@@ -44,7 +50,7 @@ class fileHandler{
     async deleteFile(req: Request, res: Response){
         let fileId = req.body.fileId
         try {
-            let file = await File.findByIdAndDelete(fileId)
+            await File.findByIdAndDelete(fileId)
             res.json(dataResponse(null, 200, 'File Deleted'))
         } catch (error) {
             res.json(dataResponse(error, 500, 'Something went wrong'))

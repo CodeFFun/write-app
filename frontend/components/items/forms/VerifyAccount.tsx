@@ -1,6 +1,6 @@
 'use client' 
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
 import Axios from '../../lib/axios/Axios'
 import Btn from '../Button'
@@ -9,8 +9,13 @@ export default function VerifyAccount() {
   const axios = new Axios()
   const queryClient = useQueryClient()
   const [token, setToken] = useState('')
+  const[userData, setUserData] = useState<any>()
 
-  const userData: any = queryClient.getQueryData(['FormData'])
+  useEffect(() => {
+    if(typeof window !== undefined && window.localStorage){
+      setUserData(JSON.stringify(localStorage.getItem('user')));
+    }
+  }, [userData])
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setToken(e.target.value as string)
@@ -18,12 +23,17 @@ export default function VerifyAccount() {
 
   const onSubmit =(e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(userData.id)
-    axios
-      .post('auth/verify-token', { token: token, userId: userData?.id })
-      .then((res) => {
-        console.log(res)
-      })
+    try {
+      console.log(userData);
+      axios
+        .post('auth/verify-token', { token: token, userId: userData })
+        .then((res) => {
+          console.log(res.data)
+        })
+      
+    } catch (error) {
+      console.log("Something went wrong");
+    }
   }
 
   return (
