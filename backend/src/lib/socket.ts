@@ -3,6 +3,7 @@ import {createServer} from 'http'
 import express, { Application } from 'express'
 import File from "../models/File";
 
+
 const app:Application = express()
 const httpServer = createServer(app)
 const io = new Server(httpServer, {
@@ -13,15 +14,22 @@ const io = new Server(httpServer, {
     }
 })
 
+
 const connectedUsers:any = []
 
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
     console.log('A user connected', socket.id)
+    const doc:string | undefined | string[] = socket.handshake.headers.path
+    const file = await File.findById(doc);
 
     connectedUsers.push(socket.id);
 
     socket.on("update-content", (data) => {
-        console.log(data)
+        if(file){
+            file.contents = data;
+            file.save();
+            console.log('File updated', file.contents)
+        }
     })
 
     socket.on('disconnect', () =>{

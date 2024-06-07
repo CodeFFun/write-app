@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { WorkspaceContext } from "@/components/lib/context/WorkspaceContext";
 
@@ -39,6 +39,10 @@ export default function WorkspaceDivision() {
             ...updatedData[checkIndex],
             [checkTitle]: objectContent
         };
+    }
+    //if the content is empty, remove it
+    if (objectContent === "") {
+        updatedData.splice(checkIndex, 1);
     }
     updateData(updatedData);
   };
