@@ -1,6 +1,7 @@
 'use client' 
 
 import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
 import { useQueryClient } from '@tanstack/react-query'
 import Axios from '../../lib/axios/Axios'
 import Btn from '../Button'
@@ -10,6 +11,7 @@ export default function VerifyAccount() {
   const queryClient = useQueryClient()
   const [token, setToken] = useState('')
   const[userData, setUserData] = useState<any>()
+  const router = useRouter()
 
   useEffect(() => {
     if(typeof window !== undefined && window.localStorage){
@@ -30,6 +32,7 @@ export default function VerifyAccount() {
         .then((res) => {
           console.log(res.data)
         })
+        router.push('/login')
       
     } catch (error) {
       console.log("Something went wrong");

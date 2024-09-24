@@ -19,9 +19,9 @@ export default function RootLayout({
     <html lang='en'>
       <body>
         <TanstackProvider>
-          <Providers>
+          {/* <Providers> */}
             {children}
-          </Providers>
+          {/* </Providers> */}
         </TanstackProvider>
       </body>
     </html>

@@ -55,7 +55,17 @@ class fileHandler{
         } catch (error) {
             res.json(dataResponse(error, 500, 'Something went wrong'))
         }
-}
+    }
+
+    async getFileContent(req:Request, res:Response){
+        let fileId = req.body.fileId
+        try {
+            const file = await File.findById(fileId)
+            res.json(dataResponse(file?.contents, 200, 'File Content Fetched'))
+        } catch (err) {
+            res.json(dataResponse(err, 500, 'Something went wrong'))
+        }
+    }
 }
 
 export default fileHandler;

@@ -10,7 +10,6 @@ export default function HomeHolder() {
     const localAcess = typeof window !== undefined && window.localStorage
     if(localAcess){
       const localeItem:any = window.localStorage.getItem('user')
-      console.log(localeItem)
       setLocale(() => localeItem as string)
     }
   }, [])
