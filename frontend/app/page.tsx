@@ -1,6 +1,6 @@
 import LandingMain from "@/components/items/main/LandingMain"
 import LandingNav from "@/components/items/navbar/LandingNav"
-import { WorkspaceProvider } from "@/components/lib/context/WorkspaceContext"
+
 
 
 export default function LandingPage() {

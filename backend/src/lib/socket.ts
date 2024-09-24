@@ -14,23 +14,31 @@ const io = new Server(httpServer, {
     }
 })
 
+let x = 0
+
 
 const connectedUsers:any = []
 
 io.on('connection', async (socket) => {
+    connectedUsers.push(socket.id);
     console.log('A user connected', socket.id)
     const doc:string | undefined | string[] = socket.handshake.headers.path
     const file = await File.findById(doc);
 
-    connectedUsers.push(socket.id);
-
-    socket.on("update-content", (data) => {
-        if(file){
-            file.contents = data;
-            file.save();
-            console.log('File updated', file.contents)
+    if(file){
+        if(file.contents !== null){
+            console.log('something')
+            socket.emit("file-opened", file.contents)
         }
-    })
+        
+        socket.on("update-content", (data) => {
+                file.contents = data;
+                file.save();
+                console.log('File updated', x++ , file.contents)
+            
+        })
+    }
+
 
     socket.on('disconnect', () =>{
         console.log('User disconnected', socket.id)
